@@ -1,12 +1,14 @@
-import express from 'express'
+import { Express } from 'express'
+import WebSocket, {WebSocketServer} from 'ws'
 
-const app = express();
-const port = 3000;
+const matchNum = 1;
 
-app.get("/", (req, res) => {
-    res.send("Hello world!")
-})
+const wss = new WebSocketServer({port: 8080})
 
-app.listen(port, () => {
-    console.log(`Hosting on port ${port}`)
+wss.on("connection", (ws) => {
+    ws.on("message", (data) => {
+        console.log(`received ${data}`)
+    })
+
+    ws.send("hello hello")
 })
